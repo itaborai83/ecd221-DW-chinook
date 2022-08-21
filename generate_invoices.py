@@ -42,27 +42,27 @@ class CumFreqTable:
 class Db:
     
     SQL_READ_MUSIC_DATA = """
-        SELECT	a.GenreId 	as genre_id
-        ,		a.Name 		as genre
-        ,		d.ArtistId 	as artist_id
-        ,		d.Name 		as artist
-        ,		c.AlbumId 	as album_id
-        ,		c.Title 	as album
-        ,		b.TrackId 	as track_id
-        ,		b.Name 		as track
+        SELECT  a.GenreId   as genre_id
+        ,       a.Name      as genre
+        ,       d.ArtistId  as artist_id
+        ,       d.Name      as artist
+        ,       c.AlbumId   as album_id
+        ,       c.Title     as album
+        ,       b.TrackId   as track_id
+        ,       b.Name      as track
         ,       b.UnitPrice as unit_price
-        FROM	genres a
+        FROM    genres a
                 --
                 INNER JOIN tracks b
-                ON	a.GenreId   = b.GenreId 
+                ON  a.GenreId   = b.GenreId 
                 --
                 INNER JOIN albums c
-                ON	b.AlbumId   = c.AlbumId 
+                ON  b.AlbumId   = c.AlbumId 
                 --
                 INNER JOIN artists d
-                ON	c.ArtistId  = d.ArtistId 
+                ON  c.ArtistId  = d.ArtistId 
                 --
-        ORDER	BY 1, 3, 5, 7
+        ORDER   BY 1, 3, 5, 7
     """
     SQL_LAST_ROWID = "SELECT last_insert_rowid();"
     SQL_INSERT_CUSTOMER = """
@@ -498,18 +498,18 @@ class Track:
 @dataclass
 class Customer:
     # db fields
-    id	           : int
-    first_name	   : str
-    last_name	   : str
-    company	       : str
-    address	       : str
-    city	       : str
-    state	       : str
-    country	       : str
-    postal_code	   : str
-    phone	       : str
-    fax	           : str
-    email	       : str
+    id             : int
+    first_name     : str
+    last_name      : str
+    company        : str
+    address        : str
+    city           : str
+    state          : str
+    country        : str
+    postal_code    : str
+    phone          : str
+    fax            : str
+    email          : str
     support_rep_id : int
     # not persisted
     churned        : bool
@@ -568,106 +568,106 @@ class Customer:
     LOCATION_CITY_IDX       = 2
     LOCATION_CUMFREQ_IDX    = 3
     LOCATIONS = [
-        (('Brazil',	'RJ', 	'Rio de Janeiro', 	        ), 3094),
-        (('Brazil',	'SP', 	'São Paulo', 	            ), 2657),
-        (('Brazil',	'SP', 	'Campinas', 	            ), 1347),
-        (('Brazil',	'MG', 	'Belo Horizonte', 	        ), 1221),
-        (('Brazil',	'RS', 	'Porto Alegre', 	        ), 1131),
-        (('Brazil',	'PR', 	'Maringá', 	                ), 1042),
-        (('Brazil',	'ES', 	'Vitória', 	                ), 953), 
-        (('Brazil',	'GO', 	'Goiânia', 	                ), 944), 
-        (('Brazil',	'SP', 	'Sorocaba', 	            ), 941), 
-        (('Brazil',	'SC', 	'Florianópolis', 	        ), 936), 
-        (('Brazil',	'MS', 	'Campo Grande', 	        ), 932), 
-        (('Brazil',	'MG', 	'Juiz de Fora', 	        ), 891), 
-        (('Brazil',	'PR', 	'Curitiba', 	            ), 836), 
-        (('Brazil',	'SP', 	'Ribeirão Preto', 	        ), 824), 
-        (('Brazil',	'SP', 	'Piracicaba', 	            ), 811), 
-        (('Brazil',	'AM', 	'Manaus', 	                ), 803), 
-        (('Brazil',	'SP', 	'Santos', 	                ), 750), 
-        (('Brazil',	'PR', 	'Foz do Iguaçu', 	        ), 723), 
-        (('Brazil',	'CE', 	'Fortaleza', 	            ), 721), 
-        (('Brazil',	'BA', 	'Salvador', 	            ), 711), 
-        (('Brazil',	'MT', 	'Cuiabá', 	                ), 707), 
-        (('Brazil',	'SC', 	'Joinville', 	            ), 706), 
-        (('Brazil',	'SP', 	'Jundiaí', 	                ), 674), 
-        (('Brazil',	'PB', 	'João Pessoa', 	            ), 670), 
-        (('Brazil',	'ES', 	'Vila Velha', 	            ), 637), 
-        (('Brazil',	'PR', 	'Londrina', 	            ), 634), 
-        (('Brazil',	'SP', 	'São José dos Campos', 	    ), 633), 
-        (('Brazil',	'SP', 	'Guarulhos', 	            ), 626), 
-        (('Brazil',	'PE', 	'Recife', 	                ), 579), 
-        (('Brazil',	'RS', 	'Caxias do Sul', 	        ), 576), 
-        (('Brazil',	'RN', 	'Natal', 	                ), 571), 
-        (('Brazil',	'SP', 	'Guarujá', 	                ), 567), 
-        (('Brazil',	'SP', 	'São José do Rio Preto', 	), 556), 
-        (('Brazil',	'MA', 	'São Luís', 	            ), 545), 
-        (('Brazil',	'MG', 	'Uberaba', 	                ), 528), 
-        (('Brazil',	'RJ', 	'Duque de Caxias', 	        ), 522), 
-        (('Brazil',	'MG', 	'Uberlândia', 	            ), 521), 
-        (('Brazil',	'PI', 	'Teresina', 	            ), 510), 
-        (('Brazil',	'SP', 	'Mauá', 	                ), 510), 
-        (('Brazil',	'SP', 	'Santo André', 	            ), 508), 
-        (('Brazil',	'SC', 	'Itajaí', 	                ), 503), 
-        (('Brazil',	'RJ', 	'Petrópolis', 	            ), 480), 
-        (('Brazil',	'ES', 	'Serra', 	                ), 479), 
-        (('Brazil',	'SP', 	'São Bernardo do Campo', 	), 475), 
-        (('Brazil',	'SP', 	'Hortolândia', 	            ), 467), 
-        (('Brazil',	'PA', 	'Belém', 	                ), 463), 
-        (('Brazil',	'MG', 	'Contagem', 	            ), 440), 
-        (('Brazil',	'SE', 	'Aracaju', 	                ), 439), 
-        (('Brazil',	'SP', 	'Taubaté', 	                ), 438), 
-        (('Brazil',	'RO', 	'Porto Velho', 	            ), 435), 
-        (('Brazil',	'TO', 	'Palmas', 	                ), 429), 
-        (('Brazil',	'SP', 	'Indaiatuba', 	            ), 426), 
-        (('Brazil',	'MG', 	'Betim', 	                ), 417), 
-        (('Brazil',	'PR', 	'São José dos Pinhais', 	), 405), 
-        (('Brazil',	'SP', 	'Rio Claro', 	            ), 404), 
-        (('Brazil',	'RJ', 	'Niterói', 	                ), 399), 
-        (('Brazil',	'MG', 	'Governador Valadares', 	), 397), 
-        (('Brazil',	'AL', 	'Maceió', 	                ), 396), 
-        (('Brazil',	'SP', 	'Diadema', 	                ), 389), 
-        (('Brazil',	'PR', 	'Cascavel', 	            ), 388), 
-        (('Brazil',	'MG', 	'Poços de Caldas', 	        ), 378), 
-        (('Brazil',	'RJ', 	'Volta Redonda', 	        ), 362), 
-        (('Brazil',	'PR', 	'Paranaguá', 	            ), 361), 
-        (('Brazil',	'SP', 	'Ribeirão Pires', 	        ), 359), 
-        (('Brazil',	'RJ', 	'Angra dos Reis', 	        ), 357), 
-        (('Brazil',	'SP', 	'Barretos', 	            ), 352), 
-        (('Brazil',	'RS', 	'São Leopoldo', 	        ), 346), 
-        (('Brazil',	'RJ', 	'Resende', 	                ), 334), 
-        (('Brazil',	'RJ', 	'Campos dos Goytacazes', 	), 329), 
-        (('Brazil',	'SP', 	'São Caetano do Sul', 	    ), 328), 
-        (('Brazil',	'GO', 	'Anápolis (NA)', 	        ), 326), 
-        (('Brazil',	'RJ', 	'Barra do Pirai', 	        ), 323), 
-        (('Brazil',	'SP', 	'Barueri', 	                ), 322), 
-        (('Brazil',	'PE', 	'Jaboatão dos Guararapes', 	), 319), 
-        (('Brazil',	'ES', 	'Cariacica', 	            ), 316), 
-        (('Brazil',	'SP', 	'Sumaré', 	                ), 315), 
-        (('Brazil',	'RS', 	'Canoas', 	                ), 314), 
-        (('Brazil',	'SP', 	'Cubatão', 	                ), 314), 
-        (('Brazil',	'RJ', 	'Barra Mansa', 	            ), 307), 
-        (('Brazil',	'SP', 	'Osasco', 	                ), 303), 
-        (('Brazil',	'SP', 	'Mogi das Cruzes', 	        ), 297), 
-        (('Brazil',	'SP', 	'Araçatuba', 	            ), 294), 
-        (('Brazil',	'SP', 	'Itapecerica da Serra', 	), 293), 
-        (('Brazil',	'RJ', 	'Macaé', 	                ), 290), 
-        (('Brazil',	'RR', 	'Boa Vista', 	            ), 279), 
-        (('Brazil',	'SP', 	'Mogi Mirim', 	            ), 277), 
-        (('Brazil',	'RS', 	'Rio Grande', 	            ), 269), 
-        (('Brazil',	'SP', 	'Cotia', 	                ), 267), 
-        (('Brazil',	'SP', 	'Valinhos', 	            ), 261), 
-        (('Brazil',	'RS', 	'Gravataí', 	            ), 258), 
-        (('Brazil',	'AC', 	'Rio Branco', 	            ), 255), 
-        (('Brazil',	'ES', 	'Guarapari', 	            ), 243), 
-        (('Brazil',	'SP', 	'Pindamonhangaba', 	        ), 234), 
-        (('Brazil',	'RJ', 	'São Gonçalo', 	            ), 233), 
-        (('Brazil',	'PR', 	'Araucária', 	            ), 230), 
-        (('Brazil',	'MG', 	'Ouro Preto', 	            ), 229), 
-        (('Brazil',	'ES', 	'Linhares', 	            ), 228), 
-        (('Brazil',	'SC', 	'Rio do Sul', 	            ), 226), 
-        (('Brazil',	'SP', 	'Atibaia (NA)', 	        ), 220), 
-        (('Brazil',	'SP', 	'Guaratinguetá', 	        ), 213)
+        (('Brazil', 'RJ',   'Rio de Janeiro',           ), 3094),
+        (('Brazil', 'SP',   'São Paulo',                ), 2657),
+        (('Brazil', 'SP',   'Campinas',                 ), 1347),
+        (('Brazil', 'MG',   'Belo Horizonte',           ), 1221),
+        (('Brazil', 'RS',   'Porto Alegre',             ), 1131),
+        (('Brazil', 'PR',   'Maringá',                  ), 1042),
+        (('Brazil', 'ES',   'Vitória',                  ), 953), 
+        (('Brazil', 'GO',   'Goiânia',                  ), 944), 
+        (('Brazil', 'SP',   'Sorocaba',                 ), 941), 
+        (('Brazil', 'SC',   'Florianópolis',            ), 936), 
+        (('Brazil', 'MS',   'Campo Grande',             ), 932), 
+        (('Brazil', 'MG',   'Juiz de Fora',             ), 891), 
+        (('Brazil', 'PR',   'Curitiba',                 ), 836), 
+        (('Brazil', 'SP',   'Ribeirão Preto',           ), 824), 
+        (('Brazil', 'SP',   'Piracicaba',               ), 811), 
+        (('Brazil', 'AM',   'Manaus',                   ), 803), 
+        (('Brazil', 'SP',   'Santos',                   ), 750), 
+        (('Brazil', 'PR',   'Foz do Iguaçu',            ), 723), 
+        (('Brazil', 'CE',   'Fortaleza',                ), 721), 
+        (('Brazil', 'BA',   'Salvador',                 ), 711), 
+        (('Brazil', 'MT',   'Cuiabá',                   ), 707), 
+        (('Brazil', 'SC',   'Joinville',                ), 706), 
+        (('Brazil', 'SP',   'Jundiaí',                  ), 674), 
+        (('Brazil', 'PB',   'João Pessoa',              ), 670), 
+        (('Brazil', 'ES',   'Vila Velha',               ), 637), 
+        (('Brazil', 'PR',   'Londrina',                 ), 634), 
+        (('Brazil', 'SP',   'São José dos Campos',      ), 633), 
+        (('Brazil', 'SP',   'Guarulhos',                ), 626), 
+        (('Brazil', 'PE',   'Recife',                   ), 579), 
+        (('Brazil', 'RS',   'Caxias do Sul',            ), 576), 
+        (('Brazil', 'RN',   'Natal',                    ), 571), 
+        (('Brazil', 'SP',   'Guarujá',                  ), 567), 
+        (('Brazil', 'SP',   'São José do Rio Preto',    ), 556), 
+        (('Brazil', 'MA',   'São Luís',                 ), 545), 
+        (('Brazil', 'MG',   'Uberaba',                  ), 528), 
+        (('Brazil', 'RJ',   'Duque de Caxias',          ), 522), 
+        (('Brazil', 'MG',   'Uberlândia',               ), 521), 
+        (('Brazil', 'PI',   'Teresina',                 ), 510), 
+        (('Brazil', 'SP',   'Mauá',                     ), 510), 
+        (('Brazil', 'SP',   'Santo André',              ), 508), 
+        (('Brazil', 'SC',   'Itajaí',                   ), 503), 
+        (('Brazil', 'RJ',   'Petrópolis',               ), 480), 
+        (('Brazil', 'ES',   'Serra',                    ), 479), 
+        (('Brazil', 'SP',   'São Bernardo do Campo',    ), 475), 
+        (('Brazil', 'SP',   'Hortolândia',              ), 467), 
+        (('Brazil', 'PA',   'Belém',                    ), 463), 
+        (('Brazil', 'MG',   'Contagem',                 ), 440), 
+        (('Brazil', 'SE',   'Aracaju',                  ), 439), 
+        (('Brazil', 'SP',   'Taubaté',                  ), 438), 
+        (('Brazil', 'RO',   'Porto Velho',              ), 435), 
+        (('Brazil', 'TO',   'Palmas',                   ), 429), 
+        (('Brazil', 'SP',   'Indaiatuba',               ), 426), 
+        (('Brazil', 'MG',   'Betim',                    ), 417), 
+        (('Brazil', 'PR',   'São José dos Pinhais',     ), 405), 
+        (('Brazil', 'SP',   'Rio Claro',                ), 404), 
+        (('Brazil', 'RJ',   'Niterói',                  ), 399), 
+        (('Brazil', 'MG',   'Governador Valadares',     ), 397), 
+        (('Brazil', 'AL',   'Maceió',                   ), 396), 
+        (('Brazil', 'SP',   'Diadema',                  ), 389), 
+        (('Brazil', 'PR',   'Cascavel',                 ), 388), 
+        (('Brazil', 'MG',   'Poços de Caldas',          ), 378), 
+        (('Brazil', 'RJ',   'Volta Redonda',            ), 362), 
+        (('Brazil', 'PR',   'Paranaguá',                ), 361), 
+        (('Brazil', 'SP',   'Ribeirão Pires',           ), 359), 
+        (('Brazil', 'RJ',   'Angra dos Reis',           ), 357), 
+        (('Brazil', 'SP',   'Barretos',                 ), 352), 
+        (('Brazil', 'RS',   'São Leopoldo',             ), 346), 
+        (('Brazil', 'RJ',   'Resende',                  ), 334), 
+        (('Brazil', 'RJ',   'Campos dos Goytacazes',    ), 329), 
+        (('Brazil', 'SP',   'São Caetano do Sul',       ), 328), 
+        (('Brazil', 'GO',   'Anápolis (NA)',            ), 326), 
+        (('Brazil', 'RJ',   'Barra do Pirai',           ), 323), 
+        (('Brazil', 'SP',   'Barueri',                  ), 322), 
+        (('Brazil', 'PE',   'Jaboatão dos Guararapes',  ), 319), 
+        (('Brazil', 'ES',   'Cariacica',                ), 316), 
+        (('Brazil', 'SP',   'Sumaré',                   ), 315), 
+        (('Brazil', 'RS',   'Canoas',                   ), 314), 
+        (('Brazil', 'SP',   'Cubatão',                  ), 314), 
+        (('Brazil', 'RJ',   'Barra Mansa',              ), 307), 
+        (('Brazil', 'SP',   'Osasco',                   ), 303), 
+        (('Brazil', 'SP',   'Mogi das Cruzes',          ), 297), 
+        (('Brazil', 'SP',   'Araçatuba',                ), 294), 
+        (('Brazil', 'SP',   'Itapecerica da Serra',     ), 293), 
+        (('Brazil', 'RJ',   'Macaé',                    ), 290), 
+        (('Brazil', 'RR',   'Boa Vista',                ), 279), 
+        (('Brazil', 'SP',   'Mogi Mirim',               ), 277), 
+        (('Brazil', 'RS',   'Rio Grande',               ), 269), 
+        (('Brazil', 'SP',   'Cotia',                    ), 267), 
+        (('Brazil', 'SP',   'Valinhos',                 ), 261), 
+        (('Brazil', 'RS',   'Gravataí',                 ), 258), 
+        (('Brazil', 'AC',   'Rio Branco',               ), 255), 
+        (('Brazil', 'ES',   'Guarapari',                ), 243), 
+        (('Brazil', 'SP',   'Pindamonhangaba',          ), 234), 
+        (('Brazil', 'RJ',   'São Gonçalo',              ), 233), 
+        (('Brazil', 'PR',   'Araucária',                ), 230), 
+        (('Brazil', 'MG',   'Ouro Preto',               ), 229), 
+        (('Brazil', 'ES',   'Linhares',                 ), 228), 
+        (('Brazil', 'SC',   'Rio do Sul',               ), 226), 
+        (('Brazil', 'SP',   'Atibaia (NA)',             ), 220), 
+        (('Brazil', 'SP',   'Guaratinguetá',            ), 213)
     ]
     LOCATIONS_CUMFREQ = CumFreqTable.new()
     
@@ -685,18 +685,18 @@ class Customer:
         last_name = random.choice(klass.LAST_NAMES) + ' ' + random.choice(klass.LAST_NAMES)
         country, state, city = klass.pick_location()
         return klass(
-            id	           = None
-        ,   first_name	   = first_name
-        ,   last_name	   = last_name
-        ,   company	       = klass.DEFAULT_COMPANY
-        ,   address	       = klass.DEFAULT_ADDRESS
-        ,   city	       = city
-        ,   state	       = state
-        ,   country	       = country
-        ,   postal_code	   = klass.DEFAULT_POSTAL_CODE
-        ,   phone	       = klass.DEFAULT_PHONE
-        ,   fax	           = None
-        ,   email	       = klass.DEFAULT_EMAIL
+            id             = None
+        ,   first_name     = first_name
+        ,   last_name      = last_name
+        ,   company        = klass.DEFAULT_COMPANY
+        ,   address        = klass.DEFAULT_ADDRESS
+        ,   city           = city
+        ,   state          = state
+        ,   country        = country
+        ,   postal_code    = klass.DEFAULT_POSTAL_CODE
+        ,   phone          = klass.DEFAULT_PHONE
+        ,   fax            = None
+        ,   email          = klass.DEFAULT_EMAIL
         ,   support_rep_id = klass.DEFAULT_SUPPORT_REP_ID
         ,   churned        = False
         ,   db_state       = db_state
@@ -724,27 +724,27 @@ class InvoiceLine:
 
 @dataclass
 class Invoice:
-    id	         : int
-    customer_id	 : int
-    invoice_date : str	
-    address	     : str
-    city	     : str
-    state	     : str
-    country	     : str
-    postal_code	 : str
+    id           : int
+    customer_id  : int
+    invoice_date : str
+    address      : str
+    city         : str
+    state        : str
+    country      : str
+    postal_code  : str
     total        : float
 
     @classmethod
     def new(klass, date, customer):
         return klass(
-            id	         = None
-        ,   customer_id	 = customer.id
+            id           = None
+        ,   customer_id  = customer.id
         ,   invoice_date = date
-        ,   address	     = Customer.DEFAULT_ADDRESS
-        ,   city	     = customer.city
-        ,   state	     = customer.state
-        ,   country	     = customer.country
-        ,   postal_code	 = Customer.DEFAULT_POSTAL_CODE
+        ,   address      = Customer.DEFAULT_ADDRESS
+        ,   city         = customer.city
+        ,   state        = customer.state
+        ,   country      = customer.country
+        ,   postal_code  = Customer.DEFAULT_POSTAL_CODE
         ,   total        = 0.0
         )
     
@@ -753,6 +753,7 @@ class App(object):
     GLOBAL_MEAN         = 500.0
     GLOBAL_SIGMA        = 25.0
     DAILY_GROWTH_FACTOR = 0.000548095
+    SWITCH_FACTOR_PROB  = 0.02
     NOISE_MEAN          = 5 
     NOISE_SIGMA         = 2
     
@@ -818,13 +819,16 @@ class App(object):
         db.commit()
         db.close()
 
-    def compute_num_invoices(self, date):
+    def compute_num_invoices(self, date, switch_factor):
         parameters       = self.MONTH_PARAMETERS[ date.month ]
         effective_factor = self.factor + parameters['seasonality']
         noise            = random.normalvariate(self.NOISE_MEAN, self.NOISE_SIGMA)
         r                = random.normalvariate(parameters['mu'], parameters['sigma'])
         result           = int((r + noise) * effective_factor)
-        self.factor     += self.DAILY_GROWTH_FACTOR
+        if switch_factor:
+            self.factor -= self.DAILY_GROWTH_FACTOR
+        else:
+            self.factor += self.DAILY_GROWTH_FACTOR
         return result
         
     def create_invoices(self, db, state):
@@ -833,9 +837,12 @@ class App(object):
         db.clear_old_invoices()
         db.commit() # intermediate commit
         date = self.start_date
+        switch_factor = False
         while date < self.end_date:
             created_invoices = 0
-            num_invoices = self.compute_num_invoices(date)
+            if (1 - self.SWITCH_FACTOR_PROB) < random.random():
+                switch_factor = not switch_factor
+            num_invoices = self.compute_num_invoices(date, switch_factor)
             #self.info(f'creating {num_invoices} invoices for date {date}')
             for i in range(num_invoices):
                 created_invoices += state.create_invoice(db, date)
