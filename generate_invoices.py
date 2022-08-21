@@ -8,7 +8,7 @@ import random
 import math
 import datetime as dt
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict, List, Set
 
 
 @dataclass
@@ -178,7 +178,13 @@ class Db:
         row = cursor.fetchone()
         c.id = row[0]
         del cursor
-
+    
+    def clear_old_invoices(self):
+        cursor = self.conn.cursor()
+        cursor.execute("DELETE FROM invoices")
+        cursor.execute("DELETE FROM invoice_items")
+        del cursor
+        
     def insert_invoice(self, i):
         params = (
             i.customer_id
@@ -248,6 +254,7 @@ class State:
     
     NUM_INVOICE_LINES_MU    = math.log(2)
     NUM_INVOICE_LINES_SIGMA = 0.75
+    CHURN_PROB              = 0.00005
     
     def __repr__(self):
         return "<State>"
@@ -306,7 +313,6 @@ class State:
         self.tracks[track.id] = track
         album.track_ids.append(track.id)
         genre.track_ids.append(track.id)
-        
     
     def add_customer(self, customer):
         self.customers[customer.id] = customer
@@ -389,6 +395,9 @@ class State:
                 
     def create_invoice(self, db, date):
         customer = self.sample_customer()
+        if customer.churned:
+            return 0
+        customer.churned = (1 - self.CHURN_PROB) < random.random()
         tracks   = []
         
         r = random.lognormvariate(self.NUM_INVOICE_LINES_MU, self.NUM_INVOICE_LINES_SIGMA)
@@ -409,7 +418,7 @@ class State:
             invoice_line = InvoiceLine.new(invoice, track)
             db.insert_invoice_line(invoice_line)
             customer = self.get_customer(invoice.customer_id)
-            customer.tracks_bought.append(track.id)
+            customer.tracks_bought.add(track.id)
         return 1
         
 @dataclass
@@ -503,9 +512,10 @@ class Customer:
     email	       : str
     support_rep_id : int
     # not persisted
+    churned        : bool
     db_state       : State
     preferences    : List[int]
-    tracks_bought  : List[int]
+    tracks_bought  : Set[int]
     
     DEFAULT_COMPANY         = None
     DEFAULT_ADDRESS         = 'Rua das Palmeiras, n. 7'
@@ -688,9 +698,10 @@ class Customer:
         ,   fax	           = None
         ,   email	       = klass.DEFAULT_EMAIL
         ,   support_rep_id = klass.DEFAULT_SUPPORT_REP_ID
+        ,   churned        = False
         ,   db_state       = db_state
         ,   preferences    = db_state.pick_genre_preference(klass.PREFERENCE_COUNT)
-        ,   tracks_bought  = []
+        ,   tracks_bought  = set()
         )
 
 @dataclass
@@ -804,7 +815,6 @@ class App(object):
         db.open()
         for i in range(self.num_customers):
             c = state.create_customer(db)
-            #self.info(f'saving {c}')
         db.commit()
         db.close()
 
@@ -820,6 +830,8 @@ class App(object):
     def create_invoices(self, db, state):
         self.info(f'creating invoices')
         db.open()
+        db.clear_old_invoices()
+        db.commit() # intermediate commit
         date = self.start_date
         while date < self.end_date:
             created_invoices = 0
